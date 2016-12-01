@@ -1,5 +1,5 @@
-//Cruz
 #include <iostream>
+#include<conio.h>
 using namespace std;
 
 class Stack {
@@ -11,14 +11,14 @@ class Stack {
     }
     
   void push(int t) {
-  	cout << "Push "<<t<<": \n";
+  
     if (top == maxelem) 
 		return;
     s[top++] = t;
   }
   
   int pop() {
-  	cout << "Pop: \n";
+  	
     if (top == 0) 
 		return -1;
     return s[--top];
@@ -44,33 +44,48 @@ class Stack {
   int maxelem;
 };
 
-int main() {
-  Stack * s = new Stack(100);
+void menu(){
+	Stack * s = new Stack(100);
+	int choice,numberPush;
+	while(choice!=4){
+	cout<<"What would you like to do?:\n";
+	cout<<"1: Push:\n";
+	cout<<"2: Pop:\n";
+	cout<<"3: Display:\n";
+	cout<<"4: Exit:\n";
+	cout<<"Enter choice:";
+	cin>>choice;
+	switch (choice)
+{
+	case 1: 
+	cout<<"Input a number to push: ";
+	cin>>numberPush;
+	s->push(numberPush);
+	break;
+	
+	case 2: 
+	s->pop();
+	break;
+	
+	case 3:
+	s->display();
+	break;
+	
+	case 4:
+	exit(0);
+	break;
+	
+	default:
+	cout<<"Wrong input!";
 
-  s -> display();
-  s -> push(1);
-  s -> display();
-  s -> push(2);
-  s -> display();
-  s -> push(3);
-  s -> display();
-  s -> push(4);
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> push(10);
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> pop();
-  s -> display();
-  s -> pop();
-  s -> display();
+}	
+	getch();
+	system("cls");
+}	
+}
+
+
+int main() {	  
+  menu();
   return 1;
 }
