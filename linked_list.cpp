@@ -63,7 +63,7 @@ void addafter(int num, int loc) {
   int i;
   struct node * temp, * left, * right;
   right = head;
-  for (i = 1; i < loc; i++) {
+  for (i = 1; i <= loc; i++) {
     left = right;
     right = right -> next; 
   }
@@ -75,7 +75,7 @@ void addafter(int num, int loc) {
   return;
 }
 
-int ddelete(int num) {
+int delete_val(int num) {
   struct node * temp, * prev;
   temp = head;
   while (temp != NULL) {
@@ -102,7 +102,7 @@ void delete_all(int num) {
   int c = 0;
   n = head;
   while (n != NULL) {
-    ddelete(num); 
+    delete_val(num); 
     n = n -> next;
     c++;
   }
@@ -144,14 +144,8 @@ int main() {
   int i, num, loc;
   struct node * n;
   head = NULL;
-	insert(2);
-	insert(2);
-	insert(2);
-	insert(5);
-	insert(4);
-	insert(2);
   while (1) {
-  	//system("cls");
+  	system("cls");
     cout<<"Linked List Operations\n";
     cout<<"===============\n";
     cout<<"1.Insert\n";
@@ -202,7 +196,7 @@ int main() {
         else {
           cout<<"Enter the number to delete : ";
           cin>> num;
-          if (ddelete(num))
+          if (delete_val(num))
             cout<< num <<" deleted successfully\n";
           else
             cout<< num <<" not found in the list\n";
@@ -213,7 +207,7 @@ int main() {
         cout<<"Enter number to delete: ";
         cin>>num;
         delete_all(num);
-        cout<<"All " << num <<"has been deleted succesfully";
+        cout<<"All " << num <<" has been deleted succesfully";
         break;
         
       case 7:
