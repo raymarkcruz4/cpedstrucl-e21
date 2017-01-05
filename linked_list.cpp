@@ -1,99 +1,234 @@
-#include <iostream>
-#include <conio.h>
+#include<stdio.h> 
+#include<stdlib.h>
+#include<iostream>
+#include<conio.h>
 using namespace std;
 
-class LinkedList{
-    struct Node {
-        int x;
-        Node *next;
-    };
+struct node {
+	int data;
+	struct node * next;
+} *head;
+  
+int count() {
+  struct node * n;
+  int c = 0;
+  n = head;
+  while (n != NULL) {
+    n = n -> next;
+    c++;
+  }
+  return c;
+}
 
-public:
-    LinkedList(){
-        head = NULL; // set head to NULL
+void search(int num) {
+  struct node * n;
+  int c = 0;
+  n = head;
+  while (n != NULL) {
+  	if(n->data==num){
+    cout<<"Location: " << c;
+	} 
+    n = n -> next;
+    c++;
+  }
+}
+
+
+void append(int num) {
+  struct node * temp, * right;
+  temp = (struct node * ) malloc(sizeof(struct node));
+  temp -> data = num;
+  right = (struct node * ) head;
+  while (right -> next != NULL)
+  right = right -> next;
+  right -> next = temp;
+  right = temp;
+  right -> next = NULL;
+}
+
+void add(int num) {
+  struct node * temp;
+  temp = (struct node * ) malloc(sizeof(struct node));
+  temp -> data = num;
+  if (head == NULL) {
+    head = temp;
+    head -> next = NULL;
+  } else {
+    temp -> next = head;
+    head = temp;
+  }
+}
+
+void addafter(int num, int loc) {
+  int i;
+  struct node * temp, * left, * right;
+  right = head;
+  for (i = 1; i < loc; i++) {
+    left = right;
+    right = right -> next; 
+  }
+  temp = (struct node * ) malloc(sizeof(struct node));
+  temp -> data = num;
+  left -> next = temp;
+  left = temp;
+  left -> next = right;
+  return;
+}
+
+int ddelete(int num) {
+  struct node * temp, * prev;
+  temp = head;
+  while (temp != NULL) {
+    if (temp -> data == num) {
+      if (temp == head) {
+        head = temp -> next;
+        free(temp);
+        return 1;
+      } else {
+        prev -> next = temp -> next;
+        free(temp);
+        return 1;
+      }
+    } else {
+      prev = temp;
+      temp = temp -> next;
     }
+  }
+  return 0;
+}
 
-    void addValue(int value){  
-        Node *n = new Node();   
-        n->x = value;             
-        n->next = head;                 
-        head = n;         
-		cout <<"You have pushed " << value;     
+void delete_all(int num) {
+  struct node * n;
+  int c = 0;
+  n = head;
+  while (n != NULL) {
+    ddelete(num); 
+    n = n -> next;
+    c++;
+  }
+}
+
+void insert(int num) {
+  int c = 0;
+  struct node * temp;
+  temp = head;
+  if (temp == NULL) {
+    add(num);
+  } else {
+    while (temp != NULL) {
+      if (temp -> data <= num)
+        c++;
+      temp = temp -> next;
     }
+    if (c == 0)
+      add(num);
+    else
+      append(num);
+  }
+}
 
-    int popValue(){
-        Node *n = head;
-        int ret = n->x;
-        head = head->next;
-        delete n;
-        return ret;
-    }
-    
-    void displayValue (){
-    	tempo = head;
-		while (head != 0)
-		{
-		Node *n = head;
-		Node *t = tempo;
-		int ret = n->x;
-		head = head->next;
-        cout << ret << endl;
-	}
-	head = tempo;
-	}
-	
-	void updateValue (int pos, int num){
-	}
 
-private:
-    Node *head; 
-    Node *tempo;
-};
+void display(struct node * r) {
+  r = head;
+  if (r == NULL) {
+    return;
+  }
+  while (r != NULL) {
+    printf("%d ", r -> data);
+    r = r -> next;
+  }
+  printf("\n");
+}
 
 int main() {
-    LinkedList list;
-	int choice;
-while(1){
-	system("cls");
-	int value, num, pos;
-	cout << "Linked List\n";
-	cout << "[1] Push\n";
-	cout << "[2] Pop\n";
-	cout << "[3] Display\n";
-	cout << "[4] Update\n";
-	cout << "[5] Exit\n";
-	cout << "Enter choice: ";
-	cin >> choice;
-	switch(choice){
-		
-		case 1:
-			cout << "Enter value to push:";
-			cin >> value;
-			list.addValue(value);
-			break;
-			
-		case 2:
-			cout << "Poped "<<list.popValue() << endl;
-			break;
-			
-		case 3:
-			list.displayValue();
-			break;
-			
-		case 4: 
-		cout << "Enter position: ";
-		cin >> pos;
-		cout << "Enter number to swap: ";
-		cin >> num;
-	
-		case 5:
-			exit(1);
-			
-		default:
-			cout << "Invalid input try again\n";
-			break;
-	}
-	getch();
-}
-    return 0;
+  int i, num, loc;
+  struct node * n;
+  head = NULL;
+	insert(2);
+	insert(2);
+	insert(2);
+	insert(5);
+	insert(4);
+	insert(2);
+  while (1) {
+  	//system("cls");
+    cout<<"Linked List Operations\n";
+    cout<<"===============\n";
+    cout<<"1.Insert\n";
+    cout<<"2.Add After\n";
+    cout<<"3.Display\n";
+    cout<<"4.Size\n";
+    cout<<"5.Delete\n";
+    cout<<"6.Delete All\n";
+    cout<<"7.Search\n";
+    cout<<"8.Exit\n";
+    cout<<"Enter your choice : ";
+    cin>>i;
+    if (i <= 0) {
+      cout<<"Enter only an Integer\n";
+      exit(0);
+    } else {
+      switch (i) {
+      	
+      case 1:
+        cout<<"Enter the number to insert : ";
+        cin>>num;
+        insert(num);
+        break;
+        
+      case 2:
+      	cout<<"Enter Value: ";
+      	cin>>num;
+      	cout<<"Enter Location: ";
+      	cin>>loc;
+      	addafter(num,loc);
+        
+      case 3:
+        if (head == NULL) {
+          cout<<"List is Empty\n";
+        } else {
+          cout<<"Element(s) in the list are : ";
+        }
+        display(n);
+        break;
+        
+      case 4:
+        cout<<"Size of the list is " << count() <<endl;
+        break;
+        
+      case 5:
+        if (head == NULL)
+          cout<<"List is Empty\n";
+        else {
+          cout<<"Enter the number to delete : ";
+          cin>> num;
+          if (ddelete(num))
+            cout<< num <<" deleted successfully\n";
+          else
+            cout<< num <<" not found in the list\n";
+        }
+        break;
+        
+      case 6:
+        cout<<"Enter number to delete: ";
+        cin>>num;
+        delete_all(num);
+        cout<<"All " << num <<"has been deleted succesfully";
+        break;
+        
+      case 7:
+      	  cout << "Enter number to find position: ";
+      	  cin >> num;
+      	  search(num);
+      	  break;
+	  	  
+      case 8:
+        return 0; 
+      default:
+        cout<<"Invalid option\n";
+      }
+    }
+	getch();    
+  }
+  return 0;
 }
