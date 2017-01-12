@@ -7,6 +7,7 @@ using namespace std;
 struct node {
 	int data;
 	struct node * next;
+	struct node * prev;
 } *head;
   
 int count() {
@@ -26,7 +27,7 @@ void search(int num) {
   n = head;
   while (n != NULL) {
   	if(n->data==num){
-    cout<<"Location: " << c;
+    cout<<"Location: " << c <<endl;
 	} 
     n = n -> next;
     c++;
@@ -82,7 +83,7 @@ int delete_val(int num) {
     if (temp -> data == num) {
       if (temp == head) {
         head = temp -> next;
-        free(temp);
+//        free(temp);
         return 1;
       } else {
         prev -> next = temp -> next;
@@ -109,26 +110,32 @@ void delete_all(int num) {
 }
 
 void insert(int num) {
-  int c = 0;
   struct node * temp;
   temp = head;
   if (temp == NULL) {
     add(num);
   } else {
     while (temp != NULL) {
-      if (temp -> data <= num)
-        c++;
       temp = temp -> next;
     }
-    if (c == 0)
-      add(num);
-    else
       append(num);
   }
 }
 
 
 void display(struct node * r) {
+  r = head;
+  if (r == NULL) {
+    return;
+  }
+  while (r != NULL) {
+    printf("%d ", r -> data);
+    r = r -> next;
+  }
+  printf("\n");
+}
+
+void reverse (struct node * r) {
   r = head;
   if (r == NULL) {
     return;
@@ -153,9 +160,10 @@ int main() {
     cout<<"3.Display\n";
     cout<<"4.Size\n";
     cout<<"5.Delete\n";
-    cout<<"6.Delete All\n";
+    cout<<"6.Delete Occurance\n";
     cout<<"7.Search\n";
-    cout<<"8.Exit\n";
+    cout<<"8.Reverse\n";
+    cout<<"9.Exit\n";
     cout<<"Enter your choice : ";
     cin>>i;
     if (i <= 0) {
@@ -216,7 +224,12 @@ int main() {
       	  search(num);
       	  break;
 	  	  
-      case 8:
+	  	  
+	  case 8:
+	  	reverse(n);
+	  	break;
+	  	
+      case 9:
         return 0; 
       default:
         cout<<"Invalid option\n";
