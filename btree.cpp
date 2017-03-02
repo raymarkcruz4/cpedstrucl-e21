@@ -6,7 +6,7 @@
 using namespace std;
 
 struct avl_node{
-	char data;
+	int data;
 	struct avl_node *left;
 	struct avl_node *right;
 }*root;
@@ -33,6 +33,15 @@ int main(){
 	int choice;
 	char item;
 	avlTree avl;
+	
+	root = avl.insert(root, 8);
+	root = avl.insert(root, 30);
+	root = avl.insert(root, 35);
+	root = avl.insert(root, 5);
+	root = avl.insert(root, 7);
+	
+	//8 30 35 5 7
+	//ino 8 5 7 30 35
 	while(1){
 		cout << "---------------------"<<endl;
 		cout << "AVL Tree Implementation"<<endl;
@@ -151,11 +160,11 @@ avl_node *avlTree::insert(avl_node *root, int value){
 	}
 	else if(value<root->data){
 		root->left = insert(root->left,value);
-		root = balance(root);
+		//root = balance(root);
 	}
 	else if(value >= root->data){
 		root->right = insert(root->right, value);
-		root = balance(root);
+		//root = balance(root);
 	}
 	return root;
 }
